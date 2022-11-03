@@ -1,0 +1,14 @@
+name: syzygy
+description: A new Flutter project.
+
+version: 0.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+  flutter: ^2.10.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flame: ^1.1.0
