@@ -54,18 +54,6 @@ class KlondikeGame extends FlameGame {
       ..viewfinder.position = Vector2(cardWidth * 3.5 + cardGap * 4, 0)
       ..viewfinder.anchor = Anchor.topCenter;
     add(camera);
-
-    final random = Random();
-    for (var i = 0; i < 7; i++) {
-      for (var j = 0; j < 7; j++) {
-        final card = Card(random.nextInt(13) + 1, random.nextInt(4))
-          ..position = Vector2(100 + i * 1150, 100 + j * 1500)
-          ..addToParent(world);
-        if (random.nextDouble() < 0.9) {
-          card.flip();
-        }
-      }
-    }
   }
 }
 
