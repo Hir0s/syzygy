@@ -4,11 +4,10 @@ import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:syzygy/components/card.dart';
-import 'package:syzygy/components/foundation.dart';
-import 'package:syzygy/components/pile.dart';
-import 'package:syzygy/components/stock.dart';
-import 'package:syzygy/components/waste.dart';
+import 'package:syzygy/components/foundation_pile.dart';
+import 'package:syzygy/components/tableau_pile.dart';
+import 'package:syzygy/components/stock_pile.dart';
+import 'package:syzygy/components/waste_pile.dart';
 
 class KlondikeGame extends FlameGame {
   static const double cardWidth = 1000.0;
@@ -21,22 +20,22 @@ class KlondikeGame extends FlameGame {
   Future<void> onLoad() async {
     await Flame.images.load('klondike-sprites.png');
 
-    final stock = Stock()
+    final stock = StockPile()
       ..size = cardSize
       ..position = Vector2(cardGap, cardGap);
-    final waste = Waste()
+    final waste = WastePile()
       ..size = cardSize
       ..position = Vector2(cardWidth + 2 * cardGap, cardGap);
     final foundations = List.generate(
       4,
-      (i) => Foundation()
+      (i) => FoundationPile()
         ..size = cardSize
         ..position =
             Vector2((i + 3) * (cardWidth + cardGap) + cardGap, cardGap),
     );
     final piles = List.generate(
       7,
-      (i) => Pile()
+      (i) => TableauPile()
         ..size = cardSize
         ..position = Vector2(
             cardGap + i * (cardWidth + cardGap), cardHeight + 2 * cardGap),
