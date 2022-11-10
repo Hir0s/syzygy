@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
@@ -10,12 +11,17 @@ import 'package:syzygy/components/tableau_pile.dart';
 import 'package:syzygy/components/stock_pile.dart';
 import 'package:syzygy/components/waste_pile.dart';
 
-class KlondikeGame extends FlameGame {
+class KlondikeGame extends FlameGame with HasTappableComponents {
   static const double cardWidth = 1000.0;
   static const double cardHeight = 1400.0;
   static const double cardGap = 175.0;
   static const double cardRadius = 100.0;
   static final Vector2 cardSize = Vector2(cardWidth, cardHeight);
+
+  static final cardRRect = RRect.fromRectAndRadius(
+    const Rect.fromLTWH(0, 0, cardWidth, cardHeight),
+    const Radius.circular(cardRadius),
+  );
 
   @override
   Future<void> onLoad() async {
@@ -60,6 +66,7 @@ class KlondikeGame extends FlameGame {
         for (var suit = 0; suit < 4; suit++) Card(rank, suit)
     ];
     world.addAll(cards);
+    cards.shuffle();
     cards.forEach(stock.acquireCard);
   }
 }
