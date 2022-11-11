@@ -15,6 +15,7 @@ class WastePile extends PositionComponent implements Pile {
     card.priority = _cards.length;
     card.pile = this;
     _cards.add(card);
+    _fanOutTopCards();
   }
 
   void _fanOutTopCards() {
@@ -40,4 +41,22 @@ class WastePile extends PositionComponent implements Pile {
 
   @override
   bool canMoveCard(Card card) => _cards.isNotEmpty && card == _cards.last;
+
+  @override
+  bool canAcceptCard(Card card) {
+    return false;
+  }
+
+  @override
+  void removeCard(Card card) {
+    assert(canMoveCard(card));
+    _cards.removeLast();
+    _fanOutTopCards();
+  }
+
+  @override
+  void returnCard(Card card) {
+    card.priority = _cards.indexOf(card);
+    _fanOutTopCards();
+  }
 }

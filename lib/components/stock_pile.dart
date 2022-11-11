@@ -21,9 +21,9 @@ class StockPile extends PositionComponent with TapCallbacks implements Pile {
 
   @override
   void onTapUp(TapUpEvent event) {
-    final wasePile = parent!.firstChild<WastePile>()!;
+    final wastePile = parent!.firstChild<WastePile>()!;
     if (_cards.isEmpty) {
-      wasePile.removeAllCards().reversed.forEach((card) {
+      wastePile.removeAllCards().reversed.forEach((card) {
         card.flip();
         acquireCard(card);
       });
@@ -31,7 +31,7 @@ class StockPile extends PositionComponent with TapCallbacks implements Pile {
       for (var i = 0; i < 3; i++) {
         final card = _cards.removeLast();
         card.flip();
-        wasePile.acquireCard(card);
+        wastePile.acquireCard(card);
       }
     }
   }
@@ -57,4 +57,17 @@ class StockPile extends PositionComponent with TapCallbacks implements Pile {
 
   @override
   bool canMoveCard(Card card) => false;
+
+  @override
+  bool canAcceptCard(Card card) {
+    return false;
+  }
+
+  @override
+  void removeCard(Card card) =>
+      throw StateError('cannot remove cards from here');
+
+  @override
+  void returnCard(Card card) =>
+      throw StateError('cannnot remove cards from here');
 }
