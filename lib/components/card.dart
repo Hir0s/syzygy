@@ -74,15 +74,15 @@ class Card extends PositionComponent {
       BlendMode.srcATop,
     );
 
-  static late final Sprite redJack = klondikeSprite(81, 565, 562, 488);
-  static late final Sprite redQueen = klondikeSprite(717, 541, 486, 515);
-  static late final Sprite redKing = klondikeSprite(1305, 532, 407, 549);
+  static late final Sprite redJack = klondikeSprite(82, 567, 562, 487);
+  static late final Sprite redQueen = klondikeSprite(719, 542, 486, 515);
+  static late final Sprite redKing = klondikeSprite(1307, 533, 408, 550);
 
-  static late final Sprite blackJack = klondikeSprite(81, 565, 562, 488)
+  static late final Sprite blackJack = klondikeSprite(82, 567, 562, 487)
     ..paint = blueFilter;
-  static late final Sprite blackQueen = klondikeSprite(717, 541, 486, 515)
+  static late final Sprite blackQueen = klondikeSprite(719, 542, 486, 515)
     ..paint = blueFilter;
-  static late final Sprite blackKing = klondikeSprite(1305, 532, 407, 549)
+  static late final Sprite blackKing = klondikeSprite(1307, 533, 408, 550)
     ..paint = blueFilter;
 
   void _renderFront(Canvas canvas) {

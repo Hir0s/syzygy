@@ -17,10 +17,10 @@ class Suit {
   final Sprite sprite;
 
   static late final List<Suit> _singletons = [
-    Suit._(0, '♥', 1176, 17, 172, 183),
-    Suit._(1, '♦', 973, 14, 177, 182),
-    Suit._(2, '♣', 974, 226, 174, 172),
-    Suit._(3, '♠', 1178, 220, 176, 182),
+    Suit._(0, '♥', 1178, 18, 172, 182),
+    Suit._(1, '♦', 975, 14, 177, 182),
+    Suit._(2, '♣', 976, 227, 183, 171),
+    Suit._(3, '♠', 1180, 221, 176, 181),
   ];
 
   bool get isRed => value <= 1;
