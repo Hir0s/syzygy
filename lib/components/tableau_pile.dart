@@ -2,8 +2,9 @@ import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:syzygy/components/card.dart';
 import 'package:syzygy/klondike_game.dart';
+import 'package:syzygy/pile.dart';
 
-class TableauPile extends PositionComponent {
+class TableauPile extends PositionComponent implements Pile {
   TableauPile({super.position}) : super(size: KlondikeGame.cardSize);
 
   final _borderPaint = Paint()
@@ -26,6 +27,7 @@ class TableauPile extends PositionComponent {
       card.position = _cards.last.position + _fanOffset;
     }
     card.priority = _cards.length;
+    card.pile = this;
     _cards.add(card);
   }
 
@@ -33,4 +35,7 @@ class TableauPile extends PositionComponent {
     assert(_cards.last.isFaceDown);
     _cards.last.flip();
   }
+
+  @override
+  bool canMoveCard(Card card) => _cards.isNotEmpty && card == _cards.last;
 }

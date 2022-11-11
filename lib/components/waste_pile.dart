@@ -1,9 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:syzygy/klondike_game.dart';
+import 'package:syzygy/pile.dart';
 
 import 'card.dart';
 
-class WastePile extends PositionComponent {
+class WastePile extends PositionComponent implements Pile {
   WastePile({super.position}) : super(size: KlondikeGame.cardSize);
 
   final List<Card> _cards = [];
@@ -12,6 +13,7 @@ class WastePile extends PositionComponent {
     assert(card.isFaceUp);
     card.position = position;
     card.priority = _cards.length;
+    card.pile = this;
     _cards.add(card);
   }
 
@@ -35,4 +37,7 @@ class WastePile extends PositionComponent {
     _cards.clear();
     return cards;
   }
+
+  @override
+  bool canMoveCard(Card card) => _cards.isNotEmpty && card == _cards.last;
 }

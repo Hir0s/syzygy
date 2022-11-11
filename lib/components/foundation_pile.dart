@@ -2,10 +2,11 @@ import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:syzygy/components/card.dart';
 import 'package:syzygy/klondike_game.dart';
+import 'package:syzygy/pile.dart';
 
 import '../suit.dart';
 
-class FoundationPile extends PositionComponent {
+class FoundationPile extends PositionComponent implements Pile {
   FoundationPile(int intSuit, {super.position})
       : suit = Suit.fromInt(intSuit),
         super(size: KlondikeGame.cardSize);
@@ -17,6 +18,7 @@ class FoundationPile extends PositionComponent {
     assert(card.isFaceUp);
     card.position = position;
     card.priority = _cards.length;
+    card.pile = this;
     _cards.add(card);
   }
 
@@ -39,4 +41,7 @@ class FoundationPile extends PositionComponent {
   late final _suitPaint = Paint()
     ..color = suit.isRed ? const Color(0x3a000000) : const Color(0x64000000)
     ..blendMode = BlendMode.luminosity;
+
+  @override
+  bool canMoveCard(Card card) => _cards.isNotEmpty && card == _cards.last;
 }

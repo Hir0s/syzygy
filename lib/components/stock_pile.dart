@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:syzygy/components/card.dart';
 import 'package:syzygy/components/waste_pile.dart';
 import 'package:syzygy/klondike_game.dart';
+import 'package:syzygy/pile.dart';
 
-class StockPile extends PositionComponent with TapCallbacks {
+class StockPile extends PositionComponent with TapCallbacks implements Pile {
   StockPile({super.position}) : super(size: KlondikeGame.cardSize);
 
   final List<Card> _cards = [];
@@ -14,6 +15,7 @@ class StockPile extends PositionComponent with TapCallbacks {
     assert(!card.isFaceUp);
     card.position = position;
     card.priority = _cards.length;
+    card.pile = this;
     _cards.add(card);
   }
 
@@ -52,4 +54,7 @@ class StockPile extends PositionComponent with TapCallbacks {
     ..style = PaintingStyle.stroke
     ..strokeWidth = 100
     ..color = const Color(0x883F5B5D);
+
+  @override
+  bool canMoveCard(Card card) => false;
 }
