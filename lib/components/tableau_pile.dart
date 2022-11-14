@@ -7,6 +7,10 @@ import 'package:syzygy/pile.dart';
 class TableauPile extends PositionComponent implements Pile {
   TableauPile({super.position}) : super(size: KlondikeGame.cardSize);
 
+  final List<Card> _cards = [];
+  final Vector2 _fanOffset1 = Vector2(0, KlondikeGame.cardHeight * 0.05);
+  final Vector2 _fanOffset2 = Vector2(0, KlondikeGame.cardHeight * 0.20);
+
   final _borderPaint = Paint()
     ..style = PaintingStyle.stroke
     ..strokeWidth = 10
@@ -17,20 +21,13 @@ class TableauPile extends PositionComponent implements Pile {
     canvas.drawRRect(KlondikeGame.cardRRect, _borderPaint);
   }
 
-  final List<Card> _cards = [];
-  final Vector2 _fanOffset = Vector2(0, KlondikeGame.cardHeight * 0.05);
-
   final List<Card> attachedCard = [];
 
   void acquireCard(Card card) {
-    if (_cards.isEmpty) {
-      card.position = position;
-    } else {
-      card.position = _cards.last.position + _fanOffset;
-    }
-    card.priority = _cards.length;
     card.pile = this;
+    card.priority = _cards.length;
     _cards.add(card);
+    layOutCards();
   }
 
   void flipTopCard() {
@@ -52,9 +49,6 @@ class TableauPile extends PositionComponent implements Pile {
     }
   }
 
-  final Vector2 _fanOffset1 = Vector2(0, KlondikeGame.cardHeight * 0.05);
-  final Vector2 _fanOffset2 = Vector2(0, KlondikeGame.cardHeight * 0.20);
-
   @override
   void removeCard(Card card) {
     assert(_cards.contains(card) && card.isFaceUp);
@@ -67,10 +61,8 @@ class TableauPile extends PositionComponent implements Pile {
 
   @override
   void returnCard(Card card) {
-    final index = _cards.indexOf(card);
-    card.position =
-        index == 0 ? position : _cards[index - 1].position + _fanOffset;
-    card.priority = index;
+    card.priority = _cards.indexOf(card);
+    layOutCards();
   }
 
   void layOutCards() {
