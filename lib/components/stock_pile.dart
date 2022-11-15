@@ -1,12 +1,11 @@
 import 'package:flame/components.dart';
-import 'package:flame/experimental.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:syzygy/components/card.dart';
 import 'package:syzygy/components/waste_pile.dart';
 import 'package:syzygy/klondike_game.dart';
 import 'package:syzygy/pile.dart';
 
-class StockPile extends PositionComponent with TapCallbacks implements Pile {
+class StockPile extends PositionComponent implements Pile {
   StockPile({super.position}) : super(size: KlondikeGame.cardSize);
 
   final List<Card> _cards = [];
@@ -19,8 +18,7 @@ class StockPile extends PositionComponent with TapCallbacks implements Pile {
     _cards.add(card);
   }
 
-  @override
-  void onTapUp(TapUpEvent event) {
+  void flipWasteCards(Card card) {
     final wastePile = parent!.firstChild<WastePile>()!;
     if (_cards.isEmpty) {
       wastePile.removeAllCards().reversed.forEach((card) {

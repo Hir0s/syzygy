@@ -4,13 +4,16 @@ import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:syzygy/components/foundation_pile.dart';
+import 'package:syzygy/components/stock_pile.dart';
 import 'package:syzygy/components/tableau_pile.dart';
+import 'package:syzygy/components/waste_pile.dart';
 import 'package:syzygy/klondike_game.dart';
 import 'package:syzygy/pile.dart';
 import 'package:syzygy/rank.dart';
 import 'package:syzygy/suit.dart';
 
-class Card extends PositionComponent with DragCallbacks {
+class Card extends PositionComponent with DragCallbacks, TapCallbacks {
   Card(int intRank, int intSuit)
       : rank = Rank.fromInt(intRank),
         suit = Suit.fromInt(intSuit),
@@ -274,6 +277,38 @@ class Card extends PositionComponent with DragCallbacks {
     if (attachedCards.isNotEmpty) {
       attachedCards.forEach((card) => pile!.returnCard(card));
       attachedCards.clear();
+    }
+  }
+
+  @override
+  void onTapUp(TapUpEvent event) {
+    switch (pile.runtimeType) {
+      case StockPile:
+        final stockPile = parent!.firstChild<StockPile>()!;
+        stockPile.flipWasteCards(this);
+        break;
+      case TableauPile:
+        tapMoveFoundationPile();
+        break;
+      case WastePile:
+        tapMoveFoundationPile();
+        break;
+      default:
+    }
+  }
+
+  void tapMoveFoundationPile() {
+    final foundationPile = parent!
+        .componentsAtPoint(Vector2(
+            (this.suit.value + 3) *
+                    (KlondikeGame.cardWidth + KlondikeGame.cardGap) +
+                KlondikeGame.cardGap,
+            KlondikeGame.cardGap))
+        .whereType<Pile>();
+    if ((pile?.canMoveCard(this) ?? false) &&
+        foundationPile.first.canAcceptCard(this)) {
+      pile!.removeCard(this);
+      foundationPile.first.acquireCard(this);
     }
   }
 }
