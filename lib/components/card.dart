@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:syzygy/components/foundation_pile.dart';
 import 'package:syzygy/components/stock_pile.dart';
 import 'package:syzygy/components/tableau_pile.dart';
 import 'package:syzygy/components/waste_pile.dart';
@@ -288,8 +287,6 @@ class Card extends PositionComponent with DragCallbacks, TapCallbacks {
         stockPile.flipWasteCards(this);
         break;
       case TableauPile:
-        tapMoveFoundationPile();
-        break;
       case WastePile:
         tapMoveFoundationPile();
         break;
